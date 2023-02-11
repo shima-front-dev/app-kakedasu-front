@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppButton />
+    <AppButton color="indigo">ボタン</AppButton>
   </div>
 </template>
 

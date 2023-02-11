@@ -1,12 +1,20 @@
 <template>
   <div>
-    <button>テスト</button>
+    <v-btn :color="color">
+      <slot />
+    </v-btn>
   </div>
 </template>
 
 <script>
 export default {
   name: "KakedasuAppButton",
+  props: {
+    color: {
+      type: String,
+      default: "",
+    },
+  },
 
   data() {
     return {};
@@ -18,4 +26,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.AppButton {
+  cursor: pointer;
+}
+</style>
