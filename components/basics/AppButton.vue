@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-btn :color="color">
-      <slot />
-    </v-btn>
+    <v-btn :color="color" @click="onClick"><slot></slot></v-btn>
   </div>
 </template>
 
@@ -22,12 +20,12 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  methods: {
+    onClick() {
+      this.$emit("on-click");
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-.AppButton {
-  cursor: pointer;
-}
-</style>
+<style lang="scss" scoped></style>

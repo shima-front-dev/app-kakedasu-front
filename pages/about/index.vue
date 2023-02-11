@@ -1,12 +1,16 @@
 <template>
   <div>
-    <AppButton color="indigo">ボタン</AppButton>
+    <AppButton color="indigo" @on-click="apiCall">ボタン</AppButton>
   </div>
 </template>
 
 <script>
+import AppButton from "~/components/basics/AppButton";
 export default {
   name: "KakedasuAbout",
+  components: {
+    AppButton,
+  },
 
   data() {
     return {};
@@ -14,7 +18,11 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  methods: {
+    apiCall() {
+      console.log("hogehoge");
+    },
+  },
 };
 </script>
 
