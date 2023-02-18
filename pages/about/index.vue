@@ -1,29 +1,33 @@
 <template>
   <div>
-    <AppButton color="indigo" @on-click="apiCall">ボタン</AppButton>
+    <AppButton @on-click="getMsg" color="indigo">railsからapi取得</AppButton>
+    <div v-for="(msg, i) in msgs" :key="i">
+      {{ msg }}
+    </div>
   </div>
 </template>
 
 <script>
 import AppButton from "~/components/basics/AppButton";
 export default {
-  name: "KakedasuAbout",
   components: {
     AppButton,
   },
-
   data() {
-    return {};
+    return {
+      msgs: [],
+    };
   },
-
-  mounted() {},
-
   methods: {
-    apiCall() {
-      console.log("hogehoge");
+    async getMsg() {
+      const url = "http://localhost:5000/api/v1/hello";
+      const { data: response, error } = await useFetch(url);
+      console.log(process.env);
+      this.msgs.push(response.value);
     },
+  },
+  created() {
+    console.log(this.$config.public.test);
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

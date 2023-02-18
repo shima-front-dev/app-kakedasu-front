@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      test: process.env.TEST,
+    },
+  },
   css: ["vuetify/lib/styles/main.sass", "mdi/css/materialdesignicons.min.css"],
   build: {
     transpile: ["vuetify"],
