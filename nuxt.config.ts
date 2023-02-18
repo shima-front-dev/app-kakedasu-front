@@ -1,7 +1,10 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      test: process.env.TEST,
+      apiUrl:
+        process.env.NODE_ENV === "development"
+          ? process.env.API_URL
+          : "本番URL",
     },
   },
   css: ["vuetify/lib/styles/main.sass", "mdi/css/materialdesignicons.min.css"],

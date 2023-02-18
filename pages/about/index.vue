@@ -20,14 +20,14 @@ export default {
   },
   methods: {
     async getMsg() {
-      const url = "http://localhost:5000/api/v1/hello";
+      const url = `${this.$config.public.apiUrl}/hello`;
       const { data: response, error } = await useFetch(url);
-      console.log(process.env);
       this.msgs.push(response.value);
     },
   },
   created() {
-    console.log(this.$config.public.test);
+    // console.log(this.$config.public.apiUrl);
+    console.log(process.env);
   },
 };
 </script>
