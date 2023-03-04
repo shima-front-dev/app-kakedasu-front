@@ -1,8 +1,23 @@
 <template>
   <div>
-    <!-- <v-app> -->
-    <nav>ここにナビゲーションバーを入れる</nav>
-    <slot />
-    <!-- </v-app> -->
+    <BeforeLoginAppBar />
+    <main>
+      <slot />
+    </main>
   </div>
 </template>
+
+<script>
+import BeforeLoginAppBar from "~/components/BeforeLoginAppBar/BeforeLoginAppBar";
+export default {
+  components: {
+    BeforeLoginAppBar,
+  },
+};
+</script>
+
+<style>
+main {
+  padding-top: 64px;
+}
+</style>

@@ -1,10 +1,10 @@
 <template>
-  <div>ログイン前ホーム</div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: "KakedasuIndex",
+  name: "KakedasuLogin",
 
   data() {
     return {};
