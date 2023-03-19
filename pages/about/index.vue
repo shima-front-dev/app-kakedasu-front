@@ -4,6 +4,10 @@
     <div v-for="(msg, i) in msgs" :key="i">
       {{ msg }}
     </div>
+    <AppButton @on-click="getUser" color="pink">railsからapi取得</AppButton>
+    <div>
+      {{ user }}
+    </div>
   </div>
 </template>
 
@@ -16,14 +20,31 @@ export default {
   data() {
     return {
       msgs: [],
+      user: null,
     };
   },
   methods: {
     async getMsg() {
-      const url = `${this.$config.public.apiUrl}/hello`;
+      const url = `${this.$config.public.apiUrl}/users`;
       const res = await useFetch(url);
       const { data: response, error } = await useFetch(url);
-      this.msgs.push(response.value);
+      this.msgs = response.value;
+    },
+    // async getUser() {
+    //   const url = `${this.$config.public.apiUrl}/users/2`;
+    //   const res = await useFetch(url);
+    //   const { data: response, error } = await useFetch(url);
+    //   this.user = response.value;
+    // },
+    async getUser() {
+      const url = `${this.$config.public.apiUrl}/users/1`;
+      try {
+        const { data: response } = await useFetch(url);
+        console.log("ユーザー情報を取得しました:", response);
+        this.user = response;
+      } catch (error) {
+        console.error("ユーザー情報の取得に失敗しました:", error);
+      }
     },
   },
   created() {},
