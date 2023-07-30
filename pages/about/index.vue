@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <AppButton @on-click="getMsg" color="indigo">railsからapi取得</AppButton>
+    <AppButton @on-click="getMsg" color="indigo"
+      >railsからhelloを取得</AppButton
+    >
     <div v-for="(msg, i) in msgs" :key="i">
       {{ msg }}
     </div>
@@ -28,6 +30,7 @@ export default {
       const url = `${this.$config.public.apiUrl}/users`;
       const res = await useFetch(url);
       const { data: response, error } = await useFetch(url);
+      console.log(response.value);
       this.msgs = response.value;
     },
     // async getUser() {
