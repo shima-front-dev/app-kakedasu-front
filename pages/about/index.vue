@@ -3,8 +3,8 @@
     <AppButton @on-click="getMsg" color="indigo"
       >railsからhelloを取得</AppButton
     >
-    <div v-for="(msg, i) in msgs" :key="i">
-      {{ msg }}
+    <div>
+      {{ hello }}
     </div>
     <AppButton @on-click="getUser" color="pink">railsからapi取得</AppButton>
     <div>
@@ -21,17 +21,18 @@ export default {
   },
   data() {
     return {
-      msgs: [],
       user: null,
+      hello: null,
     };
   },
   methods: {
     async getMsg() {
-      const url = `${this.$config.public.apiUrl}/users`;
+      const url = `${this.$config.public.apiUrl}/hello`;
+      console.log(url);
       const res = await useFetch(url);
       const { data: response, error } = await useFetch(url);
-      console.log(response.value);
-      this.msgs = response.value;
+      console.log(response);
+      this.hello = response.value;
     },
     // async getUser() {
     //   const url = `${this.$config.public.apiUrl}/users/2`;

@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl:
         process.env.NODE_ENV === "development"
-          ? process.env.API_URL
+          ? process.env.BACK_URL
           : "本番URL",
     },
   },
