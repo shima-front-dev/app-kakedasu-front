@@ -3,12 +3,12 @@
     <AppButton @on-click="getMsg" color="indigo"
       >railsからhelloを取得</AppButton
     >
-    <div>
-      {{ hello }}
+    <div v-for="(user, index) in users" :key="index">
+      {{ user }}
     </div>
     <AppButton @on-click="getUser" color="pink">railsからapi取得</AppButton>
     <div>
-      {{ user }}
+      <!-- {{ user }} -->
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       user: null,
-      hello: null,
+      users: [],
     };
   },
   methods: {
@@ -32,7 +32,7 @@ export default {
       const res = await useFetch(url);
       const { data: response, error } = await useFetch(url);
       console.log(response);
-      this.hello = response.value;
+      this.users = response.value;
     },
     // async getUser() {
     //   const url = `${this.$config.public.apiUrl}/users/2`;
@@ -41,7 +41,7 @@ export default {
     //   this.user = response.value;
     // },
     async getUser() {
-      const url = `${this.$config.public.apiUrl}/users/1`;
+      const url = `${this.$config.public.apiUrl}/hello/5`;
       try {
         const { data: response } = await useFetch(url);
         console.log("ユーザー情報を取得しました:", response);
