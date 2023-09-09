@@ -33,7 +33,7 @@ export default {
         return this.name;
       },
       set(newVal) {
-        return this.$emit("update:name", newVal);
+        return this.$emit("update-name", newVal);
       },
     },
   },

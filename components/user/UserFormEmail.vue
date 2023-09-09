@@ -31,7 +31,7 @@ export default {
         return this.email;
       },
       set(newVal) {
-        return this.$emit("update:email", newVal);
+        return this.$emit("update-email", newVal);
       },
     },
     form() {

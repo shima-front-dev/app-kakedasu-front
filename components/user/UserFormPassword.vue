@@ -37,7 +37,7 @@ export default {
         return this.password;
       },
       set(newVal) {
-        return this.$emit("update:password", newVal);
+        return this.$emit("update-password", newVal);
       },
     },
     form() {

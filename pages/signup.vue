@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <BeforeLoginFormCard>
       <template #form-card-content>
@@ -38,7 +38,12 @@
             type="checkbox"
           ></v-checkbox>
 
-          <v-btn class="me-4" type="submit" color="blue-lighten-1" disabled>
+          <v-btn
+            class="me-4"
+            type="submit"
+            color="blue-lighten-1"
+            :disabled="isValid"
+          >
             submit
           </v-btn>
 
@@ -108,19 +113,30 @@ export default {
     return { name, phone, email, select, checkbox, items, submit, handleReset };
   },
 };
-</script>
+</script> -->
 
-<!-- <template>
+<template>
   <div>
+    {{ isValid }}
     <BeforeLoginFormCard>
       <template #form-card-content>
-        <v-form v-model="isValid" ref="form" @submit="signup">
-          <UserFormName :name.sync="params.user.name" />
-          <UserFormEmail :email.sync="params.user.email" />
-          <UserFormPassword :password.sync="params.user.password" />
+        <v-form v-model="isValid" ref="form" @submit.prevent="signup">
+          <UserFormName
+            :name.sync="params.user.name"
+            @update-name="updateName"
+          />
+          <UserFormEmail
+            :email.sync="params.user.email"
+            @update-email="updateEmail"
+          />
+          <UserFormPassword
+            :password.sync="params.user.password"
+            @update-password="updatePassword"
+          />
+          <!-- <div class="Signup_ErrorMessage">{{ errorMessage }}</div> -->
           <v-btn
             block
-            color="myblue"
+            :color="isValid ? 'blue' : 'gray'"
             class="white--text"
             :disabled="!isValid || loading"
             :loading="loading"
@@ -131,6 +147,16 @@ export default {
         </v-form>
       </template>
     </BeforeLoginFormCard>
+    <v-btn @click="signup"> テスト </v-btn>
+    <v-snackbar v-model="snackbar" vertical color="red">
+      <!-- <div class="text-subtitle-1 pb-2">This is a snackbar message</div> -->
+      <p>{{ errorMessage }}</p>
+      <template v-slot:actions>
+        <v-btn color="white" variant="text" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -153,20 +179,69 @@ export default {
       isValid: false,
       params: { user: { name: "", email: "", password: "" } },
       loading: false,
+      errorMessage: "",
+      snackbar: false,
     };
   },
   methods: {
-    signup() {
-      this.loading = true;
-      setTimeout(() => {
-        this.formReset();
-        this.loading = false;
-      }, 1500);
+    // this.loading = true;
+    // setTimeout(() => {
+    //   this.formReset();
+    //   this.loading = false;
+    // }, 1500);
+    async signup() {
+      try {
+        const { data: responseData, error } = await useFetch(
+          "http://localhost:3000/api/v1/auth",
+          {
+            method: "post",
+            body: {
+              name: this.params.user.name,
+              email: this.params.user.email,
+              password: this.params.user.password,
+            },
+            // body: {
+            //   name: this.params.name,
+            //   email: "user2@example.com",
+            //   password: "password",
+            // },
+          }
+        );
+        // エラーチェック: エラーレスポンスがある場合
+        if (error.value) {
+          this.errorMessage = error.value.data[0];
+          console.log(error.value.data[0]);
+          this.snackbar = true;
+        } else {
+          // エラーがない場合の処理
+          console.log(responseData.value);
+          console.log(responseData);
+          this.$router.push("/");
+        }
+      } catch (exception) {
+        // 非同期操作中に例外がスローされた場合の処理
+        console.error("エラーが発生しました:", exception);
+      }
     },
     formReset() {
       this.$refs.form.reset();
       this.params = { user: { name: "", email: "", password: "" } };
     },
+    updateName(name) {
+      this.params.user.name = name;
+    },
+    updateEmail(email) {
+      this.params.user.email = email;
+    },
+    updatePassword(password) {
+      this.params.user.password = password;
+    },
   },
 };
-</script> -->
+</script>
+
+<style lang="scss" scoped>
+.Signup_ErrorMessage {
+  color: red;
+}
+</style>
