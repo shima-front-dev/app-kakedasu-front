@@ -191,33 +191,44 @@ export default {
     // }, 1500);
     async signup() {
       try {
-        const { data: responseData, error } = await useFetch(
+        const { data, error, pending } = await useFetch(
           "http://localhost:3000/api/v1/auth",
           {
-            method: "post",
+            method: "POST",
             body: {
               name: this.params.user.name,
               email: this.params.user.email,
               password: this.params.user.password,
             },
-            // body: {
-            //   name: this.params.name,
-            //   email: "user2@example.com",
-            //   password: "password",
-            // },
+            onResponse({ request, response, options }) {
+              console.log("onResponse log1", request, response.status);
+              for (const header of response.headers.entries()) {
+                console.log("onResponse HEADER", header);
+              }
+            },
           }
         );
-        // エラーチェック: エラーレスポンスがある場合
-        if (error.value) {
-          this.errorMessage = error.value.data[0];
-          console.log(error.value.data[0]);
-          this.snackbar = true;
-        } else {
-          // エラーがない場合の処理
-          console.log(responseData.value);
-          console.log(responseData);
-          this.$router.push("/");
-        }
+
+        console.log(data);
+        // if (error.value) {
+        //   this.errorMessage = error.value.data[0];
+        //   console.warn(error.value.data[0]);
+        //   this.snackbar = true;
+        // } else {
+        //   console.warn(response);
+        //   this.$router.push("/");
+        // }
+        // const params = {
+        //   name: this.params.user.name,
+        //   email: this.params.user.email,
+        //   password: this.params.user.password,
+        // };
+        // const test = await fetch("http://localhost:3000/api/v1/auth", {
+        //   method: "POST",
+        //   body: JSON.stringify(params),
+        // })
+        //   .then((response) => response.json())
+        //   .then((data) => console.log(data));
       } catch (exception) {
         // 非同期操作中に例外がスローされた場合の処理
         console.error("エラーが発生しました:", exception);
